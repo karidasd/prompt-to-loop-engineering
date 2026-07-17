@@ -107,7 +107,46 @@ Tool Use      →    ReAct Loop    →    Self-Correction →   Multi-Agent
 
 ---
 
-## 🚀 Εκτέλεση
+## Prompt Engineering vs Loop Engineering — Side by Side
+
+| | Prompt Engineering | Loop Engineering |
+|---|---|---|
+| **Execution model** | Single forward pass | Iterative loop |
+| **Tools** | None (text only) | APIs, databases, code execution |
+| **Error handling** | You retry manually | Agent retries automatically |
+| **Self-evaluation** | Not possible | Built-in critique step |
+| **Memory** | Context window only | Persistent memory store |
+| **Multi-step tasks** | Limited by context | Unlimited (loop continues) |
+| **Coordination** | Single model | Multi-agent orchestration |
+| **Output quality** | Depends on prompt | Improves through iterations |
+| **Cost per task** | 1 API call | N API calls (N = loop iterations) |
+| **Best for** | Simple Q&A, formatting | Complex tasks, autonomous work |
+
+---
+
+## 🗺️ Roadmap
+
+Patterns we're building next — contributions welcome:
+
+- [ ] **Level 8: Plan-and-Execute** — agent plans all steps before executing any. More efficient than ReAct for deterministic tasks.
+- [ ] **Level 9: Debate Loop** — two agents argue opposing positions, a judge agent decides. Used in constitutional AI.
+- [ ] **Level 10: Reflection Loop** — agent reviews its own failure history before starting a new task.
+- [ ] **Framework equivalents** — LangGraph, AutoGen, and CrewAI versions of each pattern.
+- [ ] **Benchmarks** — automated quality metrics for each level vs the previous.
+
+---
+
+## 🎁 Bonus Patterns
+
+Beyond the 7 core levels, the `03_patterns/` directory contains advanced patterns:
+
+| Pattern | File | What It Adds |
+|---|---|---|
+| Memory Loop | [`memory_loop.py`](03_patterns/memory_loop.py) | Agent remembers across tasks — improves over time |
+
+---
+
+
 
 ```bash
 git clone https://github.com/karidasd/prompt-to-loop-engineering.git
