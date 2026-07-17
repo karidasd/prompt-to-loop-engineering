@@ -9,74 +9,105 @@
 
 ---
 
-> **Prompt engineering is dead. Long live loop engineering.**
->
-> Writing clever prompts was the skill of 2022-2023. It's table stakes now.
-> The engineers building serious AI systems in 2026 don't think in prompts — they think in **loops**: iterative, self-correcting, tool-using agents that run until a quality condition is met.
->
-> This repository is the complete progression. From zero-shot to multi-agent orchestration. With real, runnable Python code at every step.
+## Η Ιστορία: Πώς Φτάσαμε Εδώ
+
+Όλα ξεκίνησαν με **ένα απλό κουτί κειμένου.**
+
+Το 2022, το ChatGPT έδωσε σε εκατομμύρια ανθρώπους πρόσβαση σε ένα γλωσσικό μοντέλο για πρώτη φορά. Η αντίδραση ήταν προβλέψιμη: "Πώς το ρωτάω σωστά για να μου δώσει καλύτερη απάντηση;" — και έτσι γεννήθηκε το **Prompt Engineering**.
+
+### Η Εποχή του Prompt Engineering (2022–2024)
+
+Το Prompt Engineering ήταν η τέχνη του **να διατυπώνεις σωστά την ερώτησή σου.** Μάθαμε να:
+- Γράφουμε λεπτομερείς οδηγίες (`"Act as a senior engineer..."`)
+- Δίνουμε παραδείγματα πριν το ερώτημα (few-shot)
+- Ζητάμε από το μοντέλο να "σκεφτεί βήμα-βήμα" (chain-of-thought)
+
+Αυτό δούλεψε — μέχρι ενός σημείου.
+
+### Το Πρόβλημα
+
+Όσο και να βελτιώνεις ένα prompt, **υπάρχει ένα φράγμα που δεν μπορείς να περάσεις:**
+
+```
+Εσύ  →  [Prompt]  →  Μοντέλο  →  Απάντηση  →  ΤΕΛΟΣ
+```
+
+Αυτή η αρχιτεκτονική είναι **one-shot**: ένα ερώτημα, μία απάντηση, τέλος. Δεν μπορείς να κάνεις το μοντέλο να:
+- ❌ Ελέγξει αν η απάντησή του είναι σωστή
+- ❌ Τραβήξει δεδομένα από το internet ή βάσεις δεδομένων
+- ❌ Δοκιμάσει ξανά αν κάτι δεν δούλεψε
+- ❌ Συντονίσει με άλλα μοντέλα για πολύπλοκες εργασίες
+
+### Η Λύση: Loop Engineering (2025–2026)
+
+Αντί για ένα prompt → μία απάντηση, οι μηχανικοί άρχισαν να χτίζουν **κλειστούς βρόχους (loops):**
+
+```
+Εσύ  →  [Task]  →  Agent  →  Σκέψη  →  Ενέργεια  →  Παρατήρηση
+                      ↑                                      |
+                      └─────────── Επαναλαμβάνεται ──────────┘
+                                   μέχρι το έργο να τελειώσει
+```
+
+Τώρα το μοντέλο δεν απαντάει απλώς — **δουλεύει.** Χρησιμοποιεί εργαλεία, ελέγχει τη δουλειά του, διορθώνει λάθη, και σταματάει μόνο όταν το αποτέλεσμα πληροί ποιοτικά κριτήρια.
+
+**Αυτή είναι η διαφορά μεταξύ ενός chatbot και ενός AI agent.**
 
 ---
 
-## The Mental Model Shift
+## Το Πλήρες Spectrum: 7 Επίπεδα
 
 ```
-PROMPT ENGINEERING (2022-2023)      LOOP ENGINEERING (2025-2026)
-─────────────────────────────       ──────────────────────────────
-You → Prompt → Model → Answer       You → Task → Agent Loop → Result
-                                           ↑                      |
-One shot. Commit. Hope.                    └──── Tools / Memory ──┘
+ΕΠΙΠΕΔΟ 1          ΕΠΙΠΕΔΟ 2          ΕΠΙΠΕΔΟ 3
+Zero-Shot     →    Few-Shot      →    Chain-of-Thought
+"Ρώτα απλά"       "Δώσε παράδειγμα"  "Σκέψου βήμα-βήμα"
 
-Input quality determines output.    The loop runs until quality is met.
-You bear the cognitive load.        The system bears the cognitive load.
+     ▼ ΤΟ ΦΡΑΓΜΑ ΤΟΥ PROMPT ENGINEERING ▼
+
+ΕΠΙΠΕΔΟ 4          ΕΠΙΠΕΔΟ 5          ΕΠΙΠΕΔΟ 6          ΕΠΙΠΕΔΟ 7
+Tool Use      →    ReAct Loop    →    Self-Correction →   Multi-Agent
+"Πρόσβαση σε       "Σκέψη +           "Παράγε →          "Πολλοί agents
+ εξωτερικά          Ενέργεια +          Κριτίκαρε →        συνεργάζονται
+ εργαλεία"          επανάληψη"          Διόρθωσε"           με orchestrator"
 ```
 
 ---
 
-## 📂 The Progression (7 Levels)
+## 📂 Δομή Αρχείων
 
-### Part 1 — Prompt Engineering
-| Level | File | Concept |
+### Part 1 — Prompt Engineering (Levels 1-3)
+| Level | Αρχείο | Τι μαθαίνεις |
 |---|---|---|
-| 1 | [`01_zero_shot.py`](01_prompt_engineering/01_zero_shot.py) | One instruction. One answer. The baseline. |
-| 2 | [`02_few_shot.py`](01_prompt_engineering/02_few_shot.py) | Examples anchor the model. Output becomes predictable. |
-| 3 | [`03_chain_of_thought.py`](01_prompt_engineering/03_chain_of_thought.py) | Force step-by-step reasoning. The ceiling of single-pass thinking. |
+| 1 | [`01_zero_shot.py`](01_prompt_engineering/01_zero_shot.py) | Το baseline. Μία οδηγία, μία απάντηση. Καταλαβαίνεις γρήγορα τους περιορισμούς. |
+| 2 | [`02_few_shot.py`](01_prompt_engineering/02_few_shot.py) | Παραδείγματα αγκυρώνουν τη συμπεριφορά. Η έξοδος γίνεται προβλέψιμη. |
+| 3 | [`03_chain_of_thought.py`](01_prompt_engineering/03_chain_of_thought.py) | Αναγκάζεις το μοντέλο να σκεφτεί φωναχτά. Το ανώτατο επίπεδο single-pass thinking. |
 
-### Part 2 — Loop Engineering
-| Level | File | Concept |
+### Part 2 — Loop Engineering (Levels 4-7)
+| Level | Αρχείο | Τι μαθαίνεις |
 |---|---|---|
-| 4 | [`01_tool_use.py`](02_loop_engineering/01_tool_use.py) | The model reaches outside itself. Real-world data enters the loop. |
-| 5 | [`02_react_loop.py`](02_loop_engineering/02_react_loop.py) | Thought → Action → Observation → repeat. The ReAct pattern. |
-| 6 | [`03_self_correction.py`](02_loop_engineering/03_self_correction.py) | Generate → Critique → Revise → repeat until quality passes. |
-| 7 | [`04_multi_agent.py`](02_loop_engineering/04_multi_agent.py) | Orchestrator coordinates Researcher + Writer + Critic agents. |
+| 4 | [`01_tool_use.py`](02_loop_engineering/01_tool_use.py) | Το μοντέλο αποφασίζει μόνο του πότε και ποιο εργαλείο να καλέσει. Η πρώτη επαφή με τον πραγματικό κόσμο. |
+| 5 | [`02_react_loop.py`](02_loop_engineering/02_react_loop.py) | **Thought → Action → Observation → επανάληψη.** Το θεμέλιο κάθε AI agent. |
+| 6 | [`03_self_correction.py`](02_loop_engineering/03_self_correction.py) | **Generate → Critique → Revise.** Το μοντέλο αξιολογεί και βελτιώνει τη δική του δουλειά σε loop. |
+| 7 | [`04_multi_agent.py`](02_loop_engineering/04_multi_agent.py) | Orchestrator + Researcher + Writer + Critic. Κάθε agent έχει ρόλο. Το αποτέλεσμα είναι ανώτερο από ό,τι μπορεί να κάνει ένας agent μόνος. |
 
 ---
 
-## 💣 Why Prompt Engineering Hits a Wall
+## Γιατί Έγινε Αυτή η Αλλαγή;
 
-You can write the perfect prompt. You still can't make it:
-- **Retry** when a tool call fails
-- **Verify** a factual claim against a live database
-- **Evaluate** its own output and improve it
-- **Coordinate** multiple specialized models
+Τρεις τεχνολογικές αλλαγές το επέτρεψαν:
 
-Prompt engineering optimizes a single forward pass. Loop engineering builds a system that runs until the work is actually done.
+**1. Τα μοντέλα έγιναν αρκετά έξυπνα για να χρησιμοποιούν εργαλεία αξιόπιστα.**
+Το function calling του GPT-4 (2023) έδωσε στα μοντέλα τη δυνατότητα να αλληλεπιδρούν με εξωτερικά APIs με δομημένο τρόπο — ένα πράγμα που τα παλαιότερα μοντέλα δεν μπορούσαν να κάνουν αξιόπιστα.
 
----
+**2. Το κόστος inference έπεσε δραματικά.**
+Το να τρέξεις 10 inference calls για ένα task που παλιά χρειαζόταν 1 έγινε οικονομικά βιώσιμο. Αυτό επέτρεψε τους loops.
 
-## The 5 Loop Patterns (Cheat Sheet)
-
-```
-1. TOOL LOOP          Model → Tool Call → Observation → Model
-2. REACT LOOP         Thought → Action → Observation → Thought → ...
-3. SELF-CORRECTION    Generate → Critique → Revise → (repeat)
-4. PLAN-EXECUTE       Plan all steps → Execute each → Verify
-5. MULTI-AGENT        Orchestrator → [Agent A | Agent B | Agent C] → Merge
-```
+**3. Frameworks όπως LangChain, LangGraph, και AutoGen αφαίρεσαν την πολυπλοκότητα.**
+Δεν χρειάζεται να χτίσεις τον orchestrator από το μηδέν. Τα frameworks αναλαμβάνουν τη διαχείριση state, memory, και tool routing.
 
 ---
 
-## 🚀 Run the Examples
+## 🚀 Εκτέλεση
 
 ```bash
 git clone https://github.com/karidasd/prompt-to-loop-engineering.git
@@ -84,7 +115,7 @@ cd prompt-to-loop-engineering
 pip install -r requirements.txt
 export OPENAI_API_KEY=your_key_here
 
-# Run in order
+# Τρέξε τα επίπεδα με τη σειρά για να νιώσεις την εξέλιξη
 python 01_prompt_engineering/01_zero_shot.py
 python 01_prompt_engineering/02_few_shot.py
 python 01_prompt_engineering/03_chain_of_thought.py
@@ -94,28 +125,19 @@ python 02_loop_engineering/03_self_correction.py
 python 02_loop_engineering/04_multi_agent.py
 ```
 
-**Works with any OpenAI-compatible API** (OpenAI, Groq, Ollama, Azure OpenAI, etc.)
+**Συμβατό με κάθε OpenAI-compatible API** — OpenAI, Groq, Ollama, Azure OpenAI.
 
 ---
 
-## 📖 Further Reading
+## 📖 Βιβλιογραφία
 
-- [ReAct: Synergizing Reasoning and Acting in LLMs](https://arxiv.org/abs/2210.03629)
-- [Constitutional AI — Anthropic](https://arxiv.org/abs/2212.08073)
-- [Toolformer: Language Models Can Teach Themselves to Use Tools](https://arxiv.org/abs/2302.04761)
-- [AutoGPT — Early agentic architecture](https://github.com/Significant-Gravitas/AutoGPT)
-- [LangGraph — Production loop orchestration](https://github.com/langchain-ai/langgraph)
-
----
-
-## 🤝 Contributing
-
-This repo follows the levels. If you have a new pattern that belongs between or after existing levels, open a PR. Each file should:
-1. Start with a docstring explaining the concept and its limitations
-2. Have a runnable, self-contained example
-3. End with a comment block explaining what this pattern still can't do
+- [ReAct: Synergizing Reasoning and Acting in LLMs](https://arxiv.org/abs/2210.03629) — η επιστημονική βάση του ReAct loop
+- [Constitutional AI — Anthropic](https://arxiv.org/abs/2212.08073) — το θεωρητικό υπόβαθρο του self-correction
+- [Toolformer](https://arxiv.org/abs/2302.04761) — πώς τα μοντέλα μαθαίνουν να χρησιμοποιούν εργαλεία
+- [LangGraph](https://github.com/langchain-ai/langgraph) — production-grade loop orchestration
+- [AutoGen — Microsoft](https://github.com/microsoft/autogen) — multi-agent framework
 
 ---
 
 > Built by **[DARKAIS Data Science](https://github.com/karidasd)** · 2026
-> If this changed how you think about AI systems — give it a ⭐
+> Αν αυτό το repo άλλαξε τον τρόπο που σκέφτεσαι για AI systems — δώσε ένα ⭐
